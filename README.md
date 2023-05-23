@@ -25,7 +25,7 @@ Options:
   -w, --workers <workers>      Number of worker threads for the Tokio runtime [default: #CPU core]
   -s, --timeout <timeout>      Timeout between consecutive connections spawn as ms [default: 50]
       --udp                    Send packets via UDP
-      --tls <tls>              Send data over TLS [default: false] [possible values: true, false]
+      --tls                    Send data over TLS
       --ca <ca>                PEM File to validate server credentials
   -h, --help                   Print help
   -V, --version                Print version

@@ -87,6 +87,8 @@ fn build_cli() -> ArgMatches {
             Arg::new("tls")
                 .long("tls")
                 .help("Send data over TLS")
+                .num_args(0)
+                .default_missing_value("true")
                 .default_value("false")
                 .value_parser(clap::value_parser!(bool))
         ).arg(
