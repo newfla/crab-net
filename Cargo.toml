@@ -1,0 +1,32 @@
+[package]
+name = "crab-net"
+version = "0.0.1"
+edition = "2021"
+authors = ["Flavio Bizzarri <fl.bizzarri@gmail.com>"]
+license = "Apache-2.0"
+description = "<TCP|UDP> + TLS packets generator"
+readme = "README.md"
+homepage = "https://github.com/newfla/crab-net"
+repository = "https://github.com/newfla/crab-net"
+keywords = ["cli", "udp", "tcp", "tls", "client", "traffic", "generator"]
+categories = ["command-line-utilities"]
+
+[dependencies]
+log = "0.4"
+simple_logger = "4.0"
+fastrand = "1.9"
+clap = "4.1"
+byte-unit = "4.0"
+coarsetime = "0.1"
+tokio = { version = "1.2", features = ["full"] }
+tokio-dtls-stream-sink = "0.6"
+openssl = { version = "0.10", features = ["vendored"] }
+tokio-native-tls = "0.3"
+kanal = "0.1.0-pre8"
+derive-new = "0.5"
+mimalloc = { version = "0.1", default-features = false }
+
+[profile.release]
+lto = true
+strip = true
+panic = "abort"
