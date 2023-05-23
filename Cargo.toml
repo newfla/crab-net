@@ -8,7 +8,7 @@ description = "<TCP|UDP> + TLS packets generator"
 readme = "README.md"
 homepage = "https://github.com/newfla/crab-net"
 repository = "https://github.com/newfla/crab-net"
-keywords = ["cli", "udp", "tcp", "tls", "client", "traffic", "generator"]
+keywords = ["cli", "udp", "tcp", "tls", "traffic"]
 categories = ["command-line-utilities"]
 
 [dependencies]
