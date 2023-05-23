@@ -21,7 +21,7 @@ fn main() {
     rt.block_on(async {manager(extract_parameters(cli)).await;});
 }
 fn build_cli() -> ArgMatches {
-    Command::new("UDP TRAFFIC GENERATOR")
+    Command::new("crab-net")
         .version(option_env!("CARGO_PKG_VERSION").unwrap_or(""))
         .about("Simple stress test for servers")
         .arg(
