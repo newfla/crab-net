@@ -1,15 +1,18 @@
 use std::time::Duration;
 
 use byte_unit::Byte;
-use kanal::{AsyncSender, bounded_async};
+use kanal::{bounded_async, AsyncSender};
 use log::info;
-use tokio::{spawn, time::{interval_at, Instant}, select};
+use tokio::{
+    select, spawn,
+    time::{interval_at, Instant},
+};
 
 pub type StatPacket = (usize, usize);
 
 pub fn stats_task(clients: usize) -> AsyncSender<StatPacket> {
     //Define channel to send statistics update
-    let (stats_tx,stats_rx) = bounded_async(clients);
+    let (stats_tx, stats_rx) = bounded_async(clients);
 
     spawn(async move {
         let timer_duration = 10.;
@@ -31,7 +34,7 @@ pub fn stats_task(clients: usize) -> AsyncSender<StatPacket> {
                 stat = stats_rx.recv() => if let Ok((bytes,packets)) = stat {
                     bytes_sent += bytes as f64;
                     packets_sent += packets;
-                } 
+                }
             }
         }
     });
