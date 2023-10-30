@@ -16,7 +16,7 @@ pub async fn sender_task_udp(
     rate: usize,
     stats_tx: AsyncSender<StatPacket>,
 ) {
-    debug!("client {} spawned", id);
+    debug!("client {id} spawned");
     let one_sec = Duration::new(1, 0);
 
     loop {
@@ -41,7 +41,7 @@ pub async fn sender_task_dtls(
     rate: usize,
     stats_tx: AsyncSender<StatPacket>,
 ) {
-    debug!("client {} spawned", id);
+    debug!("client {id} spawned");
     let one_sec = Duration::new(1, 0);
 
     loop {
@@ -66,7 +66,7 @@ pub async fn sender_task_tcp(
     rate: usize,
     stats_tx: AsyncSender<StatPacket>,
 ) {
-    debug!("client {} spawned", id);
+    debug!("client {id} spawned");
     let one_sec = Duration::new(1, 0);
 
     loop {

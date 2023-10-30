@@ -24,6 +24,7 @@ fn main() {
         manager(extract_parameters(cli)).await;
     });
 }
+
 fn build_cli() -> ArgMatches {
     Command::new("crab-net")
         .version(option_env!("CARGO_PKG_VERSION").unwrap_or(""))
@@ -143,12 +144,12 @@ fn extract_parameters(matches: ArgMatches) -> Parameters {
     let bandwidth = bandwidth[0..bandwidth.len() - 1].to_string();
 
     let use_udp = *matches.get_one("udp").unwrap();
-    let use_dtls = *matches.get_one("tls").unwrap();
+    let use_tls = *matches.get_one("tls").unwrap();
     let ca_file = matches.get_one("ca").cloned();
 
-    info!("Server address: {}, clients: {}, payload size: {}, rate: {} pkt/s, sleep timeout:{} ms, udp: {}, tls: {}",server_addr, connections, len, rate, sleep, use_udp, use_dtls);
+    info!("Server address: {server_addr}, clients: {connections}, payload size: {len}, rate: {rate} pkt/s, sleep timeout:{sleep} ms, udp: {use_udp}, tls: {use_tls}");
     info!("Theoretical Packets rate: {} pkt/sec", connections * rate);
-    info!("Theoretical Bandwidth: {}bit/s", bandwidth);
+    info!("Theoretical Bandwidth: {bandwidth} bit/s");
 
     Parameters::new(
         server_addr,
@@ -157,6 +158,6 @@ fn extract_parameters(matches: ArgMatches) -> Parameters {
         len,
         start_port,
         sleep,
-        (use_udp, (use_dtls, ca_file)),
+        (use_udp, (use_tls, ca_file)),
     )
 }

@@ -13,8 +13,6 @@ use tokio::{
 };
 use tokio_dtls_stream_sink::{Client, Session};
 use tokio_native_tls::native_tls::{Certificate, TlsConnector};
-// use tokio_rustls::{rustls::{ClientConfig, RootCertStore, OwnedTrustAnchor, ServerName}, TlsConnector};
-// use webpki::TrustAnchor;
 
 mod sender;
 mod statistics;
@@ -32,6 +30,7 @@ pub async fn manager(params: Parameters) {
     let mut start_port = params.start_port;
 
     for id in 0..params.connections {
+        start_port += id;
         let payload = generate_payloads(params.len);
         let stats_tx_cloned = stats_tx.clone();
         let ca_file = ca_file.clone();
@@ -57,11 +56,9 @@ pub async fn manager(params: Parameters) {
         } else {
             let stream = setup_tcp_stream(params.server_addr, start_port).await;
             tasks.spawn(async move {
-                sender_task_tcp(id, Box::new(stream), payload, params.rate, stats_tx_cloned).await;
+                sender_task_tcp(id, stream, payload, params.rate, stats_tx_cloned).await;
             });
         }
-
-        start_port += 1;
         sleep(Duration::from_millis(params.sleep)).await;
     }
     while (tasks.join_next().await).is_some() {}
@@ -75,11 +72,11 @@ async fn setup_udp_socket(addr: SocketAddr, port: usize) -> UdpSocket {
     socket
 }
 
-async fn setup_tcp_stream(addr: SocketAddr, port: usize) -> TcpStream {
+async fn setup_tcp_stream(addr: SocketAddr, port: usize) -> Box<TcpStream> {
     let local_addr = ("0.0.0.0:".to_owned() + &port.to_string()).parse().unwrap();
     let socket = TcpSocket::new_v4().unwrap();
     socket.bind(local_addr).unwrap();
-    socket.connect(addr).await.unwrap()
+    Box::new(socket.connect(addr).await.unwrap())
 }
 
 async fn setup_dtls_session(port: usize, addr: SocketAddr, ca_file: String) -> DtlsSession {
