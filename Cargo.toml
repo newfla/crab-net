@@ -23,7 +23,7 @@ tokio-dtls-stream-sink = "0.6"
 openssl = { version = "0.10", features = ["vendored"] }
 tokio-native-tls = "0.3"
 kanal = "0.1.0-pre8"
-derive-new = "0.5"
+derive-new = "0.6"
 mimalloc = { version = "0.1", default-features = false }
 
 [profile.release]
