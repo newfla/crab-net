@@ -25,7 +25,7 @@ pub fn stats_task(clients: usize) -> AsyncSender<StatPacket> {
             select! {
                 _ = timer.tick() => {
                     bytes_sent*=8.;
-                    let bandwidth = Byte::from_bytes((bytes_sent / timer_duration) as u128).get_appropriate_unit(false).to_string();
+                    let bandwidth = Byte::from_f64(bytes_sent / timer_duration).unwrap_or_default().get_appropriate_unit(byte_unit::UnitType::Decimal).to_string();
                     let bandwidth = &bandwidth[0..bandwidth.len()-1];
                     info!("Sent {packets_sent} packets --- Bandwidth {bandwidth}bit/s");
                     bytes_sent = 0.;
