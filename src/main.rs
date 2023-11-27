@@ -138,8 +138,9 @@ fn extract_parameters(matches: ArgMatches) -> Parameters {
     let start_port = *matches.get_one("port").unwrap();
     let sleep = *matches.get_one("timeout").unwrap();
 
-    let bandwidth = Byte::from_bytes((connections * rate * len * 8) as u128)
-        .get_appropriate_unit(false)
+    let bandwidth = Byte::from_u128((connections * rate * len * 8) as u128)
+        .unwrap_or_default()
+        .get_appropriate_unit(byte_unit::UnitType::Decimal)
         .to_string();
     let bandwidth = bandwidth[0..bandwidth.len() - 1].to_string();
 
