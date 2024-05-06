@@ -13,7 +13,7 @@ categories = ["command-line-utilities"]
 
 [dependencies]
 log = "0.4"
-simple_logger = "4.0"
+simple_logger = "5.0"
 fastrand = "2.0"
 clap = "4.1"
 byte-unit = "5.0"
