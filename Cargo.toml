@@ -12,21 +12,39 @@ keywords = ["cli", "udp", "tcp", "tls", "traffic"]
 categories = ["command-line-utilities"]
 
 [dependencies]
-log = "0.4"
-simple_logger = "5.0"
-fastrand = "2.0"
-clap = "4.1"
-byte-unit = "5.0"
-coarsetime = "0.1"
-tokio = { version = "1.2", features = ["full"] }
-tokio-dtls-stream-sink = "0.6"
-openssl = { version = "0.10", features = ["vendored"] }
-tokio-native-tls = "0.3"
+log = "0.4.22"
+simple_logger = "5.0.0"
+fastrand = "2.1.0"
+clap = "4.5.8"
+byte-unit = "5.1.4"
+coarsetime = "0.1.34"
+tokio = { version = "1.38.0", features = ["full"] }
+tokio-dtls-stream-sink = "0.6.0"
+openssl = { version = "0.10.64", features = ["vendored"] }
+tokio-native-tls = "0.3.1"
 kanal = "0.1.0-pre8"
-derive-new = "0.6"
-mimalloc = { version = "0.1", default-features = false }
+derive-new = "0.6.0"
+mimalloc = { version = "0.1.43", default-features = false }
 
 [profile.release]
 lto = true
 strip = true
 panic = "abort"
+
+# The profile that 'cargo dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
+
+# Config for 'cargo dist'
+[workspace.metadata.dist]
+# The preferred cargo-dist version to use in CI (Cargo.toml SemVer syntax)
+cargo-dist-version = "0.18.0"
+# CI backends to support
+ci = "github"
+# The installers to generate for each app
+installers = []
+# Target platforms to build apps for (Rust target-triple syntax)
+targets = ["aarch64-apple-darwin", "x86_64-apple-darwin", "x86_64-unknown-linux-gnu", "x86_64-pc-windows-msvc"]
+# Publish jobs to run in CI
+pr-run-mode = "upload"
