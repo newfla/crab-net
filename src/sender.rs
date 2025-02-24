@@ -7,7 +7,7 @@ use tokio::{
     time::sleep,
 };
 
-use crate::{statistics::StatPacket, DtlsSession};
+use crate::{DtlsSession, statistics::StatPacket};
 
 pub async fn sender_task_udp(
     id: usize,
