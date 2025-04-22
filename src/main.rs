@@ -2,8 +2,8 @@ use std::net::ToSocketAddrs;
 
 use byte_unit::Byte;
 use clap::{Arg, ArgMatches, Command};
-use crab_net::{manager, Parameters};
-use log::{info, warn, LevelFilter};
+use crab_net::{Parameters, manager};
+use log::{LevelFilter, info, warn};
 use mimalloc::MiMalloc;
 use simple_logger::SimpleLogger;
 use tokio::runtime::{Builder, Runtime};
@@ -148,7 +148,9 @@ fn extract_parameters(matches: ArgMatches) -> Parameters {
     let use_tls = *matches.get_one("tls").unwrap();
     let ca_file = matches.get_one("ca").cloned();
 
-    info!("Server address: {server_addr}, clients: {connections}, payload size: {len}, rate: {rate} pkt/s, sleep timeout:{sleep} ms, udp: {use_udp}, tls: {use_tls}");
+    info!(
+        "Server address: {server_addr}, clients: {connections}, payload size: {len}, rate: {rate} pkt/s, sleep timeout:{sleep} ms, udp: {use_udp}, tls: {use_tls}"
+    );
     info!("Theoretical Packets rate: {} pkt/sec", connections * rate);
     info!("Theoretical Bandwidth: {bandwidth} bit/s");
 

@@ -1,11 +1,11 @@
 use std::time::Duration;
 
 use byte_unit::Byte;
-use kanal::{bounded_async, AsyncSender};
+use kanal::{AsyncSender, bounded_async};
 use log::info;
 use tokio::{
     select, spawn,
-    time::{interval_at, Instant},
+    time::{Instant, interval_at},
 };
 
 pub type StatPacket = (usize, usize);
